@@ -1,8 +1,8 @@
 # Using custom renderer function and clustering algorithm
 
-In order to use custom renderer function and clustering algorithm, you will need to do the following step before:
+In order to use custom renderer functions or clustering algorithms, you will need to do the following step before:
 
-## Install `@googlemaps/makerclusterer` package into your own project
+## Install `@googlemaps/markerclusterer` package into your own project
 
 Use `npm install @googlemaps/markerclusterer` to install the library into your project.
 
@@ -21,7 +21,7 @@ Following this example will help you create your own render function and cluster
     map-type-id="terrain"
     style="width: 500px; height: 300px"
   >
-    <GMapCluster :algorithm="algorithm" :renderer="{ renderer: renderer }">
+    <GMapCluster :algorithm="algorithm" :renderer="{ render: renderer }">
       <GMapMarker
         v-for="(m, index) in markers"
         :key="index"
