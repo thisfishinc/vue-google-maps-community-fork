@@ -127,6 +127,58 @@ export default {
 </script>
 ```
 
+## Center markers in the middle of the map
+
+If you want to zoom in on the map as far as you can, but still see all markers, reference this code snippet.
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const markers = [
+  {
+    lat: 47.8557578,
+    lng: 12.1133382,
+  },
+  {
+    lat: 47.8570908,
+    lng: 12.1199985,
+  },
+  {
+    lat: 47.8568879,
+    lng: 12.1270439,
+  },
+];
+
+const googleMapRef = ref();
+
+/**
+ * Centers the map on the markers and zooms to fit the bounds.
+ */
+async function fitMarkerBounds() {
+  const googleMapInstance = await googleMapRef.value.$mapPromise;
+
+  const bounds = new window.google.maps.LatLngBounds();
+
+  markers.forEach((marker) => {
+    bounds.extend(marker);
+  });
+
+  googleMapInstance.fitBounds(bounds);
+}
+</script>
+
+<template>
+  <GMapMap ref="googleMapRef">
+    <GMapMarker
+        v-for="(marker, index) in markers"
+        :key="`map-marker-${index}`"
+        :position="marker"
+    />
+  </GMapMap>
+</template>
+```
+
 ### Cluster
 
 If you have too many markers, it is helpful to cluster markers. You can easily cluster markers by wrapping your markers with `GMapCluster` component.
