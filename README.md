@@ -133,9 +133,9 @@ If you want to zoom in on the map as far as you can, but still see all markers, 
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
-const markers = [
+const markers = ref([
   {
     lat: 47.8557578,
     lng: 12.1133382,
@@ -148,7 +148,7 @@ const markers = [
     lat: 47.8568879,
     lng: 12.1270439,
   },
-];
+]);
 
 const googleMapRef = ref();
 
@@ -160,12 +160,18 @@ async function fitMarkerBounds() {
 
   const bounds = new window.google.maps.LatLngBounds();
 
-  markers.forEach((marker) => {
+  markers.value.forEach((marker) => {
     bounds.extend(marker);
   });
 
   googleMapInstance.fitBounds(bounds);
 }
+
+// center markers on first render
+onMounted(fitMarkerBounds);
+
+// center markers, if they are adjusted
+watch(markers, fitMarkerBounds);
 </script>
 
 <template>
@@ -177,6 +183,7 @@ async function fitMarkerBounds() {
     />
   </GMapMap>
 </template>
+
 ```
 
 ### Cluster
