@@ -219,7 +219,7 @@ export default {
   },
 }
 </script>
-<style>
+<style lang="scss">
 .vue-map {
   width: 100%;
   height: 100%;
